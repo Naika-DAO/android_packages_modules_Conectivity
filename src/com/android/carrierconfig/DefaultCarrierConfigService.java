@@ -305,7 +305,7 @@ public class DefaultCarrierConfigService extends CarrierService {
                     result = (id == null) || value.equals(id.getMcc());
                     break;
                 case "mnc":
-                    result = (id == null) || value.equals(id.getMnc());
+                    result = (id == null) || matchOnMnc(value, id.getMnc());
                     break;
                 case "gid1":
                     result = (id == null) || value.equalsIgnoreCase(id.getGid1());
@@ -395,5 +395,13 @@ public class DefaultCarrierConfigService extends CarrierService {
             matchFound = matcher.matches();
         }
         return matchFound;
+    }
+
+    static boolean matchOnMnc(String xmlMnc, String mnc) {
+        for (String val: xmlMnc.split(",")) {
+            if (val.equals(mnc))
+                return true;
+        }
+        return false;
     }
 }
